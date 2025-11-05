@@ -28,8 +28,8 @@ let BotService = class BotService {
         const chatId = ctx.chat.id;
         this.sessions.delete(chatId);
         await ctx.reply(' Assalomu alaykum Matematik testga xush kelibsiz.\nDarajani tanlang:', telegraf_1.Markup.keyboard([
-            ['🟢 Oson', '🟡 Sal qiyin'],
-            ['🟠 Qiyin', '🔴 Juda qiyin'],
+            [' Oson', ' Sal qiyin'],
+            [' Qiyin', ' Juda qiyin'],
         ])
             .resize()
             .oneTime());
@@ -38,10 +38,10 @@ let BotService = class BotService {
         const levelText = ctx.message.text;
         const chatId = ctx.chat.id;
         const levelMap = {
-            '🟢 Oson': 'easy',
-            '🟡 Sal qiyin': 'medium',
-            '🟠 Qiyin': 'hard',
-            '🔴 Juda qiyin': 'expert',
+            ' Oson': 'easy',
+            ' Sal qiyin': 'medium',
+            ' Qiyin': 'hard',
+            ' Juda qiyin': 'expert',
         };
         const level = levelMap[levelText] || 'easy';
         this.sessions.set(chatId, {
@@ -50,7 +50,7 @@ let BotService = class BotService {
             currentQuestion: 0,
             totalQuestions: 10,
         });
-        await ctx.reply(`✅ Siz "${levelText}" darajani tanladingiz.`);
+        await ctx.reply(`Siz "${levelText}" darajani tanladingiz.`);
         await this.askQuestion(ctx);
     }
     generateQuestion(level) {
@@ -106,18 +106,18 @@ let BotService = class BotService {
         if (!session)
             return;
         if (session.currentQuestion >= session.totalQuestions) {
-            await ctx.reply(`🏁 Test tugadi!\n✅ To‘g‘ri javoblar soni: ${session.score} / ${session.totalQuestions}`, telegraf_1.Markup.keyboard([
-                ['🔙 Savol darajasiga qaytish'],
-                ['🔁 Yana ishlash'],
+            await ctx.reply(` Test tugadi!\n To‘g‘ri javoblar soni: ${session.score} / ${session.totalQuestions}`, telegraf_1.Markup.keyboard([
+                [' Savol darajasiga qaytish'],
+                [' Yana ishlash'],
             ]).resize());
             return;
         }
         const q = this.generateQuestion(session.level);
         session.currentQuestion++;
         session.currentAnswer = q.answer;
-        await ctx.reply(`🧮 Savol ${session.currentQuestion}/${session.totalQuestions}\n${q.question}`, telegraf_1.Markup.keyboard([
+        await ctx.reply(` Savol ${session.currentQuestion}/${session.totalQuestions}\n${q.question}`, telegraf_1.Markup.keyboard([
             q.options.map((o) => o.toString()),
-            ['🔙 Savol darajasiga qaytish'],
+            [' Savol darajasiga qaytish'],
         ]).resize());
     }
     async backToLevel(ctx) {
@@ -137,10 +137,10 @@ let BotService = class BotService {
             return;
         if (userAnswer === session.currentAnswer) {
             session.score++;
-            await ctx.reply('✅ To‘g‘ri!');
+            await ctx.reply(' To‘g‘ri!');
         }
         else {
-            await ctx.reply(`❌ Noto‘g‘ri. To‘g‘ri javob: ${session.currentAnswer}`);
+            await ctx.reply(` Noto‘g‘ri. To‘g‘ri javob: ${session.currentAnswer}`);
         }
         await this.askQuestion(ctx);
     }
@@ -154,7 +154,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BotService.prototype, "onStart", null);
 __decorate([
-    (0, nestjs_telegraf_1.Hears)(['🟢 Oson', '🟡 Sal qiyin', '🟠 Qiyin', '🔴 Juda qiyin']),
+    (0, nestjs_telegraf_1.Hears)([' Oson', ' Sal qiyin', ' Qiyin', ' Juda qiyin']),
     __param(0, (0, nestjs_telegraf_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -168,7 +168,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BotService.prototype, "backToLevel", null);
 __decorate([
-    (0, nestjs_telegraf_1.Hears)('🔁 Yana ishlash'),
+    (0, nestjs_telegraf_1.Hears)('Yana ishlash'),
     __param(0, (0, nestjs_telegraf_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
